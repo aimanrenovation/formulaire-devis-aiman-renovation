@@ -1,0 +1,127 @@
+"use client";
+
+import { useRef } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { MascotTip } from "@/components/mascot-tip";
+import { compressImage } from "@/lib/compress-image";
+import type { DevisFormData, PhotoFile } from "@/lib/types";
+import { X, Camera, BookOpen } from "lucide-react";
+
+interface StepPhotosProps {
+  data: DevisFormData;
+  onChange: (field: keyof DevisFormData, value: PhotoFile[]) => void;
+}
+
+export function StepPhotos({ data, onChange }: StepPhotosProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  async function handleFiles(files: FileList | null) {
+    if (!files) return;
+    const newPhotos: PhotoFile[] = [];
+    for (const file of Array.from(files)) {
+      const base64 = await compressImage(file);
+      newPhotos.push({
+        name: file.name,
+        base64,
+        preview: base64,
+      });
+    }
+    onChange("photos", [...data.photos, ...newPhotos]);
+  }
+
+  function removePhoto(index: number) {
+    onChange(
+      "photos",
+      data.photos.filter((_, i) => i !== index)
+    );
+  }
+
+  return (
+    <Card className="border-gray-200 shadow-sm">
+      <CardHeader>
+        <CardTitle className="text-lg text-brand-red flex items-center gap-2">
+          <Camera className="w-5 h-5" />
+          Photos du chantier
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <MascotTip
+          image="/images/image_1.png"
+          text="Prenez au moins 6 photos : depuis l'entrée, chaque mur, le sol et le plafond. Bonne lumière = bon devis !"
+        />
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="w-full gap-2">
+              <BookOpen className="w-4 h-4" />
+              Voir le guide photos
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Guide Photos</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <Image src="/images/image_6.png" alt="Bonnes vs mauvaises photos" width={500} height={280} className="rounded-lg w-full" />
+              <Image src="/images/image_3.png" alt="Angles de prise de vue" width={500} height={280} className="rounded-lg w-full" />
+              <Image src="/images/image_4.png" alt="Mesures" width={500} height={280} className="rounded-lg w-full" />
+              <Image src="/images/image_5.png" alt="Vue d'ensemble" width={500} height={280} className="rounded-lg w-full" />
+              <Image src="/images/image_7.png" alt="Erreurs à éviter" width={500} height={280} className="rounded-lg w-full" />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {data.photos.length > 0 && (
+          <div className="grid grid-cols-3 gap-2">
+            {data.photos.map((photo, i) => (
+              <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
+                <img
+                  src={photo.preview}
+                  alt={`Photo ${i + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={() => removePhoto(i)}
+                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-black/80"
+                  type="button"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          onChange={(e) => handleFiles(e.target.files)}
+        />
+        <Button
+          onClick={() => inputRef.current?.click()}
+          className="w-full bg-brand-red hover:bg-brand-red/90 text-white gap-2"
+          type="button"
+        >
+          <Camera className="w-4 h-4" />
+          Ajouter des photos ({data.photos.length})
+        </Button>
+
+        <p className="text-xs text-gray-500 text-center">
+          Minimum 6 photos recommandées. Les images sont compressées automatiquement.
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
