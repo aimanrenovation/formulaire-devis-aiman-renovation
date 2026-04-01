@@ -46,11 +46,9 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
         />
 
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full gap-2">
-              <BookOpen className="w-4 h-4" />
-              Guide MagicPlan
-            </Button>
+          <DialogTrigger render={<Button variant="outline" className="w-full gap-2" />}>
+            <BookOpen className="w-4 h-4" />
+            Guide MagicPlan
           </DialogTrigger>
           <DialogContent className="max-h-[80vh] overflow-y-auto">
             <DialogHeader>

@@ -60,11 +60,9 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
         />
 
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full gap-2">
-              <BookOpen className="w-4 h-4" />
-              Voir le guide photos
-            </Button>
+          <DialogTrigger render={<Button variant="outline" className="w-full gap-2" />}>
+            <BookOpen className="w-4 h-4" />
+            Voir le guide photos
           </DialogTrigger>
           <DialogContent className="max-h-[80vh] overflow-y-auto">
             <DialogHeader>
