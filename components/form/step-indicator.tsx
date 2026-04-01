@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
 interface StepIndicatorProps {
@@ -17,26 +20,49 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
         return (
           <div key={step} className="flex items-center">
             <div className="flex flex-col items-center">
-              <div
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-mono font-bold transition-colors ${
-                  isCompleted
-                    ? "bg-green-500 text-white"
+              <motion.div
+                initial={false}
+                animate={{
+                  scale: isActive ? [1, 1.15, 1] : 1,
+                  backgroundColor: isCompleted
+                    ? "#22c55e"
                     : isActive
-                    ? "bg-brand-red text-white"
-                    : "bg-gray-200 text-gray-500"
-                }`}
+                    ? "#C0392B"
+                    : "#e5e7eb",
+                }}
+                transition={
+                  isActive
+                    ? { scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" } }
+                    : { duration: 0.3 }
+                }
+                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-mono font-bold"
               >
-                {isCompleted ? <Check className="w-4 h-4" /> : step}
-              </div>
+                {isCompleted ? (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 500 }}
+                  >
+                    <Check className="w-4 h-4 text-white" />
+                  </motion.div>
+                ) : (
+                  <span className={isActive || isCompleted ? "text-white" : "text-gray-500"}>
+                    {step}
+                  </span>
+                )}
+              </motion.div>
               <span className="text-[10px] text-gray-500 mt-1 max-w-[60px] text-center leading-tight hidden sm:block">
                 {labels[i]}
               </span>
             </div>
             {step < totalSteps && (
-              <div
-                className={`w-6 sm:w-10 h-0.5 mx-1 ${
-                  step < currentStep ? "bg-green-500" : "bg-gray-200"
-                }`}
+              <motion.div
+                initial={false}
+                animate={{
+                  backgroundColor: step < currentStep ? "#22c55e" : "#e5e7eb",
+                }}
+                transition={{ duration: 0.5 }}
+                className="w-6 sm:w-10 h-0.5 mx-1"
               />
             )}
           </div>
