@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -75,7 +76,13 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
         </Dialog>
 
         {data.plan && (
-          <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="relative aspect-video rounded-lg overflow-hidden bg-gray-100"
+          >
             <img src={data.plan.preview} alt="Plan importé" className="w-full h-full object-contain" />
             <button
               onClick={() => onChange("plan", null)}
@@ -84,7 +91,7 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
             >
               <X className="w-4 h-4" />
             </button>
-          </div>
+          </motion.div>
         )}
 
         <input

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -80,22 +81,32 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
 
         {data.photos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
-            {data.photos.map((photo, i) => (
-              <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
-                <img
-                  src={photo.preview}
-                  alt={`Photo ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  onClick={() => removePhoto(i)}
-                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-black/80"
-                  type="button"
+            <AnimatePresence>
+              {data.photos.map((photo, i) => (
+                <motion.div
+                  key={photo.name + i}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0, rotate: 10 }}
+                  transition={{ delay: i * 0.05, type: "spring" }}
+                  whileHover={{ scale: 1.05 }}
+                  className="relative aspect-square rounded-lg overflow-hidden bg-gray-100"
                 >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            ))}
+                  <img
+                    src={photo.preview}
+                    alt={`Photo ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    onClick={() => removePhoto(i)}
+                    className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-black/80"
+                    type="button"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
 
