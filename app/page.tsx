@@ -98,7 +98,7 @@ export default function Home() {
         </div>
       )}
 
-      <Footer />
+      {step === 5 && <Footer />}
     </div>
   );
 }
