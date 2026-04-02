@@ -47,7 +47,7 @@ export default function Home() {
       <AnimatedBg />
       <Hero />
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 pb-24 relative z-10">
+      <main className="flex-1 max-w-md mx-auto w-full px-4 pb-28 relative z-10">
         <StepIndicator currentStep={step} totalSteps={totalSteps} labels={STEP_LABELS} />
 
         <AnimatePresence mode="wait" custom={direction}>
@@ -70,13 +70,13 @@ export default function Home() {
       </main>
 
       {step < 5 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-10">
-          <div className="max-w-lg mx-auto flex gap-3">
+        <div className="fixed bottom-0 left-0 right-0 glass border-t border-white/20 p-4 shadow-[0_-4px_30px_rgba(0,0,0,0.08)] z-10">
+          <div className="max-w-md mx-auto flex gap-3">
             {step > 1 && (
               <Button
                 variant="outline"
                 onClick={() => { setDirection(-1); setStep(step - 1); }}
-                className="flex-1 gap-2"
+                className="flex-1 gap-2 rounded-xl border-gray-200 hover:bg-gray-50"
                 type="button"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -86,7 +86,7 @@ export default function Home() {
             <Button
               onClick={() => { setDirection(1); setStep(step + 1); }}
               disabled={!canAdvance()}
-              className={`flex-1 gap-2 bg-gradient-to-r from-brand-red via-red-600 to-brand-red bg-[length:200%_100%] hover:bg-right transition-[background-position] duration-500 text-white ${
+              className={`flex-1 gap-2 btn-premium bg-gradient-to-r from-brand-red to-brand-red-light shadow-lg shadow-brand-red/20 hover:shadow-xl hover:shadow-brand-red/30 text-white ${
                 step === 1 ? "w-full" : ""
               }`}
               type="button"
