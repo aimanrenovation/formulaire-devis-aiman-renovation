@@ -1,9 +1,9 @@
 export function AnimatedBg() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      <div className="absolute w-64 h-64 rounded-full bg-brand-red/5 -top-20 -right-20 animate-spin-slow" />
-      <div className="absolute w-48 h-48 rotate-45 bg-brand-red/3 bottom-40 -left-10 animate-spin-slow" style={{ animationDuration: "30s", animationDirection: "reverse" }} />
-      <div className="absolute w-32 h-32 rounded-full bg-brand-dark/5 top-1/2 right-10 animate-spin-slow" style={{ animationDuration: "40s" }} />
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-brand-red/[0.02] -top-40 -right-40 animate-spin-slow blur-3xl" />
+      <div className="absolute w-[400px] h-[400px] rounded-full bg-brand-red/[0.015] bottom-20 -left-40 animate-spin-slow blur-3xl" style={{ animationDuration: "35s", animationDirection: "reverse" }} />
+      <div className="absolute w-[300px] h-[300px] rounded-full bg-brand-red/[0.02] top-1/3 right-1/4 animate-spin-slow blur-2xl" style={{ animationDuration: "45s" }} />
     </div>
   );
 }
