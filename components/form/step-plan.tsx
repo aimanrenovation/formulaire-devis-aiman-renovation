@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -33,14 +32,12 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
   }
 
   return (
-    <Card className="border-gray-200 shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-lg text-brand-red flex items-center gap-2">
-          <MapPin className="w-5 h-5" />
-          Plan du logement
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="card-premium p-6">
+      <h2 className="text-xl font-bold bg-gradient-to-r from-brand-red to-brand-red-light bg-clip-text text-transparent mb-6 flex items-center gap-2">
+        <MapPin className="w-5 h-5 text-brand-red" />
+        Plan du logement
+      </h2>
+      <div className="space-y-4">
         <MascotTip
           image="/images/image_2.png"
           text="Un plan clair = un devis précis. Utilisez MagicPlan ou importez une photo de votre plan."
@@ -81,7 +78,7 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="relative aspect-video rounded-lg overflow-hidden bg-gray-100"
+            className="relative aspect-video rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5 bg-gray-100"
           >
             <img src={data.plan.preview} alt="Plan importé" className="w-full h-full object-contain" />
             <button
@@ -103,7 +100,7 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
         />
         <Button
           onClick={() => inputRef.current?.click()}
-          className="w-full bg-brand-red hover:bg-brand-red/90 text-white gap-2"
+          className="btn-premium w-full bg-gradient-to-r from-brand-red to-brand-red-light text-white shadow-lg shadow-brand-red/20 hover:shadow-xl hover:shadow-brand-red/30 gap-2"
           type="button"
         >
           <FileUp className="w-4 h-4" />
@@ -113,7 +110,7 @@ export function StepPlan({ data, onChange }: StepPlanProps) {
         <p className="text-xs text-gray-500 text-center">
           Pas de plan ? Continuez sans, on s'adapte.
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

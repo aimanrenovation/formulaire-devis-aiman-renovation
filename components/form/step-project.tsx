@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { DevisFormData } from "@/lib/types";
 import { PIECES_OPTIONS, STYLE_OPTIONS, BUDGET_OPTIONS, DELAI_OPTIONS } from "@/lib/types";
@@ -40,7 +39,7 @@ function OptionGrid({
 
   return (
     <div>
-      <label className="text-sm text-gray-600 mb-2 block">{label}</label>
+      <label className="text-sm font-medium text-gray-700 mb-2 block">{label}</label>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const isSelected = selectedArr.includes(option);
@@ -54,10 +53,10 @@ function OptionGrid({
             >
               <Badge
                 variant={isSelected ? "default" : "outline"}
-                className={`cursor-pointer text-sm px-3 py-1.5 transition-colors ${
+                className={`cursor-pointer px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   isSelected
-                    ? "bg-brand-red hover:bg-brand-red/90 text-white border-brand-red"
-                    : "hover:border-brand-red hover:text-brand-red"
+                    ? "bg-gradient-to-r from-brand-red to-brand-red-light text-white shadow-lg shadow-brand-red/20 border-transparent"
+                    : "bg-gray-50 border border-gray-200 text-gray-600 hover:border-brand-red/30 hover:bg-red-50/50"
                 }`}
                 onClick={() => handleClick(option)}
               >
@@ -73,11 +72,9 @@ function OptionGrid({
 
 export function StepProject({ data, onChange }: StepProjectProps) {
   return (
-    <Card className="border-gray-200 shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-lg text-brand-red">Votre projet</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
+    <div className="card-premium p-6">
+      <h2 className="text-xl font-bold bg-gradient-to-r from-brand-red to-brand-red-light bg-clip-text text-transparent mb-6">Votre projet</h2>
+      <div className="space-y-6">
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0 * 0.08 }}>
           <OptionGrid
             label="Pièce(s) concernée(s) *"
@@ -113,7 +110,7 @@ export function StepProject({ data, onChange }: StepProjectProps) {
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 4 * 0.08 }}>
           <div>
-            <label className="text-sm text-gray-600 mb-1 block">Description du projet *</label>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Description du projet *</label>
             <Textarea
               placeholder="Douche italienne, cloison neuve, carrelage sol..."
               value={data.description}
@@ -124,7 +121,7 @@ export function StepProject({ data, onChange }: StepProjectProps) {
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 5 * 0.08 }}>
           <div>
-            <label className="text-sm text-gray-600 mb-1 block">Contraintes d'accès (optionnel)</label>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Contraintes d'accès (optionnel)</label>
             <Textarea
               placeholder="Étage, stationnement, horaires..."
               value={data.contraintes}
@@ -133,7 +130,7 @@ export function StepProject({ data, onChange }: StepProjectProps) {
             />
           </div>
         </motion.div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

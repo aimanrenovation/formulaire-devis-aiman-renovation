@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -47,14 +46,12 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
   }
 
   return (
-    <Card className="border-gray-200 shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-lg text-brand-red flex items-center gap-2">
-          <Camera className="w-5 h-5" />
-          Photos du chantier
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="card-premium p-6">
+      <h2 className="text-xl font-bold bg-gradient-to-r from-brand-red to-brand-red-light bg-clip-text text-transparent mb-6 flex items-center gap-2">
+        <Camera className="w-5 h-5 text-brand-red" />
+        Photos du chantier
+      </h2>
+      <div className="space-y-4">
         <MascotTip
           image="/images/image_1.png"
           text="Prenez au moins 6 photos : depuis l'entrée, chaque mur, le sol et le plafond. Bonne lumière = bon devis !"
@@ -90,7 +87,7 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
                   exit={{ scale: 0, opacity: 0, rotate: 10 }}
                   transition={{ delay: i * 0.05, type: "spring" }}
                   whileHover={{ scale: 1.05 }}
-                  className="relative aspect-square rounded-lg overflow-hidden bg-gray-100"
+                  className="relative aspect-square rounded-xl overflow-hidden shadow-md ring-1 ring-black/5 bg-gray-100"
                 >
                   <img
                     src={photo.preview}
@@ -120,7 +117,7 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
         />
         <Button
           onClick={() => inputRef.current?.click()}
-          className="w-full bg-brand-red hover:bg-brand-red/90 text-white gap-2"
+          className="btn-premium w-full bg-gradient-to-r from-brand-red to-brand-red-light text-white shadow-lg shadow-brand-red/20 hover:shadow-xl hover:shadow-brand-red/30 gap-2"
           type="button"
         >
           <Camera className="w-4 h-4" />
@@ -130,7 +127,7 @@ export function StepPhotos({ data, onChange }: StepPhotosProps) {
         <p className="text-xs text-gray-500 text-center">
           Minimum 6 photos recommandées. Les images sont compressées automatiquement.
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
